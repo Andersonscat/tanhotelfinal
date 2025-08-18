@@ -45,101 +45,49 @@
             <a href="#rooms" class="cta-button">Explore Our Rooms</a>
         </div>
         <!-- Add inside your existing Hero section, after .hero-content -->
-<form class="booking-bar sleek" id="bookingForm" onsubmit="return goToBooking(event)">
-  <!-- Check-in -->
-  <label class="field">
-    <span class="field-label">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2v2H5a2 2 0 0 0-2 2v2h18V6a2 2 0 0 0-2-2h-2V2h-2v2H9V2H7zm14 8H3v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V10zm-4 4h-4v4h4v-4z"/></svg>
-      Check-in
-    </span>
-    <input type="date" id="ci" required>
-    <span class="underline"></span>
-  </label>
-
-  <!-- Arrow (decor only) -->
-  <div class="arrow-sep" aria-hidden="true">→</div>
-
-  <!-- Check-out -->
-  <label class="field">
-    <span class="field-label">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2v2H5a2 2 0 0 0-2 2v2h18V6a2 2 0 0 0-2-2h-2V2h-2v2H9V2H7zm14 8H3v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V10z"/></svg>
-      Check-out
-    </span>
-    <input type="date" id="co" required>
-    <span class="underline"></span>
-  </label>
-
-  <!-- Rooms -->
-  <button class="field as-button" type="button" id="roomsBtn">
-    <span class="field-label">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9z"/></svg>
-      <span id="roomsLabel">Rooms: 1</span>
-    </span>
-    <span class="underline"></span>
-  </button>
-
-  <!-- Guests -->
-  <button class="field as-button" type="button" id="guestsBtn">
-    <span class="field-label">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4zm8 8v-1a6 6 0 0 0-6-6H10a6 6 0 0 0-6 6v1z"/></svg>
-      <span id="guestsLabel">2 Adults, 0 Children</span>
-    </span>
-    <span class="underline"></span>
-  </button>
-
-  <!-- Special codes (collapsible) -->
-  <button class="field as-button" type="button" id="codeBtn">
-    <span class="field-label">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v4H3zM3 14h18v4H3z"/></svg>
-      Special codes
-    </span>
-    <span class="underline"></span>
-  </button>
-
-  <!-- BOOK -->
-  <button class="book-btn" type="submit" aria-label="Book">
-    BOOK
-    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 18a8 8 0 1 1 5.3-14.1A8 8 0 0 1 10 18zm8.7 1.3l-3.1-3.1"/></svg>
-  </button>
-
-  <!-- Popovers -->
-  <div class="popover" id="roomsPop">
-    <div class="row">
-      <span>Rooms</span>
-      <div class="stepper">
-        <button type="button" data-target="rooms" data-delta="-1">−</button>
-        <span id="roomsCount">1</span>
-        <button type="button" data-target="rooms" data-delta="1">+</button>
-      </div>
+<form class="booking-bar sleek">
+    <div class="field">
+        <input type="text" name="check-in" placeholder="Check-in" readonly>
     </div>
-  </div>
-
-  <div class="popover" id="guestsPop">
-    <div class="row">
-      <span>Adults</span>
-      <div class="stepper">
-        <button type="button" data-target="adults" data-delta="-1">−</button>
-        <span id="adultsCount">2</span>
-        <button type="button" data-target="adults" data-delta="1">+</button>
-      </div>
+    
+    <div class="arrow-sep">→</div>
+    
+    <div class="field">
+        <input type="text" name="check-out" placeholder="Check-out" readonly>
     </div>
-    <div class="row">
-      <span>Children</span>
-      <div class="stepper">
-        <button type="button" data-target="children" data-delta="-1">−</button>
-        <span id="childrenCount">0</span>
-        <button type="button" data-target="children" data-delta="1">+</button>
-      </div>
+    
+    <div class="field">
+        <input type="text" value="2 Adults, 0 Children" readonly>
+        <div class="popover">
+            <div class="row">
+                <span>Adults</span>
+                <div class="stepper">
+                    <button type="button" class="minus">-</button>
+                    <input type="number" name="adults" value="2" min="1" max="4">
+                    <button type="button" class="plus">+</button>
+                </div>
+            </div>
+            <div class="row">
+                <span>Children</span>
+                <div class="stepper">
+                    <button type="button" class="minus">-</button>
+                    <input type="number" name="children" value="0" min="0" max="4">
+                    <button type="button" class="plus">+</button>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-
-  <div class="popover" id="codePop">
-    <label class="code-line">
-      <span>Promo / Corp code</span>
-      <input type="text" id="promo" placeholder="Enter code">
-    </label>
-    <div class="note">Optional. Leave empty if none.</div>
-  </div>
+    
+    <div class="field">
+        <input type="text" placeholder="Special codes">
+    </div>
+    
+    <button type="submit" class="book-btn">
+        SEARCH
+        <svg viewBox="0 0 24 24">
+            <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+        </svg>
+    </button>
 </form>
 
     </section>
