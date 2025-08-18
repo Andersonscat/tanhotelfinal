@@ -200,6 +200,90 @@ h1, h2, h3 {
     color: var(--brown);
 }
 
+:root {
+  --white: #ffffff;
+  --brown: #3b2f2f;     /* основной брендовый */
+  --beige: #faf9f4;     /* фон/бумажный */
+  --gray: #8c8c8c;      /* вторичный текст */
+  --accent: #b89a6b;    /* золотисто-бронзовый */
+}
+
+/* Booking bar */
+.booking-bar.sleek{
+  position:absolute; left:50%; bottom:64px; transform:translateX(-50%);
+  display:grid; grid-template-columns: 1.2fr auto 1.2fr 1.1fr 1.6fr 1.4fr auto;
+  align-items:center; gap:22px;
+  width:min(1180px, 94vw);
+  padding:18px 18px 18px 22px;
+  background: var(--white);
+  backdrop-filter: blur(6px);
+  border-radius: 26px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.18);
+  color: var(--brown);
+  z-index: 5;
+}
+
+/* Fields */
+.field-label{
+  display:flex; align-items:center; gap:10px;
+  font-size:16px; color: var(--gray);
+  white-space:nowrap;
+}
+.field-label svg{ width:20px; height:20px; fill: var(--accent); flex: 0 0 20px; }
+
+.field input{
+  border:none; background:transparent;
+  font-size:16px; padding:2px 0 6px;
+  color: var(--brown);
+}
+.underline{ display:block; height:1px; background: rgba(0,0,0,0.1); }
+
+.arrow-sep{ color: var(--accent); opacity:.8; font-size:20px; margin-top:28px; }
+
+/* BOOK button */
+.book-btn{
+  display:flex; align-items:center; gap:8px;
+  padding:14px 24px; border:none; border-radius:999px; cursor:pointer;
+  background: var(--accent); color: var(--white);
+  font-weight:700; letter-spacing:.08em;
+  transition: transform .12s ease, box-shadow .2s ease;
+}
+.book-btn svg{ width:18px; height:18px; stroke: var(--white); stroke-width:2; fill:none; }
+.book-btn:hover{ transform: translateY(-1px); box-shadow: 0 8px 18px rgba(0,0,0,.18); }
+
+/* Popovers */
+.popover{
+  position:absolute; top: calc(100% + 10px);
+  background: var(--white);
+  border:1px solid rgba(0,0,0,0.08);
+  border-radius:14px; padding:14px;
+  box-shadow: 0 10px 24px rgba(0,0,0,.14);
+  display:none; z-index:10; min-width:260px;
+}
+.popover .row{ display:flex; justify-content:space-between; align-items:center; padding:8px 4px; }
+.stepper button{
+  width:32px; height:32px; border:1px solid rgba(0,0,0,0.12);
+  background: var(--beige);
+  border-radius:8px; cursor:pointer;
+}
+.code-line input{
+  border:1px solid rgba(0,0,0,0.12);
+  border-radius:8px; padding:10px 12px;
+  color: var(--brown);
+}
+
+/* Responsive */
+@media (max-width: 768px){
+  .booking-bar.sleek{
+    position: static; transform:none; width: min(640px, 92vw);
+    margin: 16px auto 0;
+    grid-template-columns: 1fr;
+    gap:14px; padding:16px;
+    border-radius:18px;
+  }
+  .arrow-sep{ display:none; }
+}
+
 /* About Section */
 .about {
     padding: 100px 0;
