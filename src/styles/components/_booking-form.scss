@@ -1,0 +1,138 @@
+@use '../base/variables' as *;
+@use '../utils/mixins' as *;
+@use '../utils/functions' as *;
+
+.booking-form {
+    @include glass-effect(0.95);
+    position: absolute;
+    left: 50%;
+    bottom: spacing('4xl');
+    transform: translateX(-50%);
+    width: min(1180px, 94vw);
+    border-radius: radius('xl');
+    padding: spacing('lg');
+    box-shadow: shadow('xl');
+    z-index: z-index('dropdown');
+    
+    &__grid {
+        @include grid(7, spacing('md'));
+        align-items: center;
+        
+        @include respond-to('md') {
+            grid-template-columns: repeat(3, 1fr);
+        }
+        
+        @include respond-to('sm') {
+            grid-template-columns: 1fr;
+        }
+    }
+    
+    &__field {
+        @include flex(column, flex-start, stretch, spacing('xs'));
+        position: relative;
+        
+        label {
+            @include flex(row, flex-start, center, spacing('sm'));
+            color: color('text', 'secondary');
+            font-size: font-size('sm');
+            
+            svg {
+                width: 20px;
+                height: 20px;
+                fill: color('accent');
+            }
+        }
+        
+        input {
+            @include button-reset;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            padding: spacing('xs') 0;
+            @include transition(border-color);
+            
+            &:focus {
+                border-color: color('accent');
+            }
+        }
+    }
+    
+    &__button {
+        @include button-reset;
+        @include flex(row, center, center, spacing('sm'));
+        background: color('accent');
+        color: color('primary', 'white');
+        padding: spacing('md') spacing('lg');
+        border-radius: radius('full');
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        @include transition(transform, box-shadow);
+        
+        svg {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+            stroke-width: 2;
+            fill: none;
+        }
+        
+        @include hover {
+            transform: translateY(-1px);
+            box-shadow: shadow('lg');
+        }
+    }
+    
+    &__popover {
+        position: absolute;
+        top: calc(100% + #{spacing('md')});
+        left: 0;
+        width: 100%;
+        min-width: 260px;
+        background: color('primary', 'white');
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        border-radius: radius('lg');
+        padding: spacing('md');
+        box-shadow: shadow('lg');
+        display: none;
+        z-index: z-index('dropdown');
+        
+        &.active {
+            display: block;
+        }
+        
+        .row {
+            @include flex(row, space-between, center);
+            padding: spacing('sm') spacing('xs');
+        }
+        
+        .stepper {
+            @include flex(row, center, center, spacing('sm'));
+            
+            button {
+                @include button-reset;
+                width: 32px;
+                height: 32px;
+                border: 1px solid rgba(0, 0, 0, 0.12);
+                background: color('background', 'light');
+                border-radius: radius('md');
+                @include transition(background-color);
+                
+                @include hover {
+                    background: darken(color('background', 'light'), 5%);
+                }
+            }
+            
+            input {
+                width: 40px;
+                text-align: center;
+                border: none;
+                background: none;
+            }
+        }
+    }
+    
+    @include respond-to('md') {
+        position: static;
+        transform: none;
+        margin: spacing('xl') auto;
+        width: min(640px, 92vw);
+    }
+}

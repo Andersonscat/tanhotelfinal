@@ -1,0 +1,100 @@
+@use 'variables' as *;
+
+@mixin heading-styles {
+    font-family: map-get($fonts, 'secondary');
+    font-weight: 300;
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+}
+
+@mixin body-styles {
+    font-family: map-get($fonts, 'primary');
+    font-weight: 400;
+    line-height: 1.6;
+}
+
+// Base typography styles
+body {
+    @include body-styles;
+    color: map-get($colors, 'text', 'primary');
+    font-size: map-get($font-sizes, 'base');
+}
+
+h1, h2, h3, h4, h5, h6 {
+    @include heading-styles;
+}
+
+h1 {
+    font-size: map-get($font-sizes, '5xl');
+    margin-bottom: map-get($spacing, 'xl');
+    
+    @media (max-width: map-get($breakpoints, 'md')) {
+        font-size: map-get($font-sizes, '4xl');
+    }
+}
+
+h2 {
+    font-size: map-get($font-sizes, '4xl');
+    margin-bottom: map-get($spacing, 'lg');
+    
+    @media (max-width: map-get($breakpoints, 'md')) {
+        font-size: map-get($font-sizes, '3xl');
+    }
+}
+
+h3 {
+    font-size: map-get($font-sizes, '3xl');
+    margin-bottom: map-get($spacing, 'md');
+    
+    @media (max-width: map-get($breakpoints, 'md')) {
+        font-size: map-get($font-sizes, '2xl');
+    }
+}
+
+p {
+    margin-bottom: map-get($spacing, 'md');
+    
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.text-sm {
+    font-size: map-get($font-sizes, 'sm');
+}
+
+.text-lg {
+    font-size: map-get($font-sizes, 'lg');
+}
+
+.text-xl {
+    font-size: map-get($font-sizes, 'xl');
+}
+
+.font-light {
+    font-weight: 300;
+}
+
+.font-normal {
+    font-weight: 400;
+}
+
+.font-medium {
+    font-weight: 500;
+}
+
+.font-bold {
+    font-weight: 700;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.uppercase {
+    text-transform: uppercase;
+}
+
+.letter-spacing-wide {
+    letter-spacing: 0.05em;
+}

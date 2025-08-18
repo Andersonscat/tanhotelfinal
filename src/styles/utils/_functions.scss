@@ -1,0 +1,56 @@
+@use 'sass:math';
+@use '../base/variables' as *;
+
+// Get color from nested map
+@function color($color, $shade: null) {
+    @if $shade {
+        @return map-get(map-get($colors, $color), $shade);
+    } @else {
+        @return map-get($colors, $color);
+    }
+}
+
+// Get spacing value
+@function spacing($key) {
+    @return map-get($spacing, $key);
+}
+
+// Get font-size
+@function font-size($key) {
+    @return map-get($font-sizes, $key);
+}
+
+// Get z-index
+@function z-index($key) {
+    @return map-get($z-layers, $key);
+}
+
+// Convert px to rem
+@function rem($pixels) {
+    @return math.div($pixels, 16) * 1rem;
+}
+
+// Convert px to em
+@function em($pixels, $context: 16) {
+    @return math.div($pixels, $context) * 1em;
+}
+
+// Get breakpoint
+@function breakpoint($key) {
+    @return map-get($breakpoints, $key);
+}
+
+// Get transition duration
+@function transition-duration($key) {
+    @return map-get($transitions, $key);
+}
+
+// Get shadow
+@function shadow($key) {
+    @return map-get($shadows, $key);
+}
+
+// Get border radius
+@function radius($key) {
+    @return map-get($radius, $key);
+}
