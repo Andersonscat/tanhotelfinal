@@ -1,100 +1,164 @@
 import '../styles/main.scss';
 
-// Navbar Scroll Effect
-const navbar = document.querySelector('.navbar');
-let lastScroll = 0;
+// Global error handler for unhandled promise rejections
+window.addEventListener('unhandledrejection', event => {
+  console.error('Unhandled promise rejection:', event.reason);
+  event.preventDefault();
+});
 
-window.addEventListener('scroll', () => {
-    const currentScroll = window.pageYOffset;
-    
-    // Add scrolled class when page is scrolled
-    if (currentScroll > 50) {
+// Wait for DOM to be fully loaded
+document.addEventListener('DOMContentLoaded', () => {
+  try {
+    initializeWebsite();
+  } catch (error) {
+    console.error('Error initializing website:', error);
+  }
+});
+
+function initializeWebsite() {
+  initializeNavbar();
+  initializeMobileMenu();
+  initializeSmoothScroll();
+  initializeLanguageSelector();
+  initializeScrollReveal();
+}
+
+function initializeNavbar() {
+  try {
+    const navbar = document.querySelector('.navbar');
+    if (!navbar) return;
+
+    let lastScroll = 0;
+    window.addEventListener('scroll', () => {
+      const currentScroll = window.pageYOffset;
+      if (currentScroll > 50) {
         navbar.classList.add('scrolled');
-    } else {
+      } else {
         navbar.classList.remove('scrolled');
-    }
-    
-    lastScroll = currentScroll;
-});
+      }
+      lastScroll = currentScroll;
+    });
+  } catch (error) {
+    console.error('Error initializing navbar:', error);
+  }
+}
 
-// Mobile Navigation
-const hamburger = document.querySelector('.hamburger');
-const navLinks = document.querySelector('.nav-links');
-const navRight = document.querySelector('.nav-right');
+function initializeMobileMenu() {
+  try {
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.querySelector('.nav-links');
+    const navRight = document.querySelector('.nav-right');
 
-hamburger.addEventListener('click', () => {
-    navLinks.classList.toggle('active');
-    navRight.classList.toggle('active');
-    hamburger.classList.toggle('active');
-});
+    if (!hamburger || !navLinks || !navRight) return;
 
-// Close mobile menu when clicking outside
-document.addEventListener('click', (e) => {
-    if (!hamburger.contains(e.target) && 
-        !navLinks.contains(e.target) && 
-        !navRight.contains(e.target)) {
+    hamburger.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+      navRight.classList.toggle('active');
+      hamburger.classList.toggle('active');
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!hamburger.contains(e.target) && 
+          !navLinks.contains(e.target) && 
+          !navRight.contains(e.target)) {
         navLinks.classList.remove('active');
         navRight.classList.remove('active');
         hamburger.classList.remove('active');
-    }
-});
+      }
+    });
+  } catch (error) {
+    console.error('Error initializing mobile menu:', error);
+  }
+}
 
-// Smooth Scroll
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            const headerOffset = 80;
-            const elementPosition = target.getBoundingClientRect().top;
-            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+function initializeSmoothScroll() {
+  try {
+    const navLinks = document.querySelector('.nav-links');
+    const navRight = document.querySelector('.nav-right');
+    const hamburger = document.querySelector('.hamburger');
 
-            window.scrollTo({
-                top: offsetPosition,
-                behavior: 'smooth'
-            });
-            
-            // Close mobile menu after clicking a link
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        try {
+          e.preventDefault();
+          const href = this.getAttribute('href');
+          if (!href) return;
+
+          const target = document.querySelector(href);
+          if (!target) return;
+
+          const headerOffset = 80;
+          const elementPosition = target.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+
+          if (navLinks && navRight && hamburger) {
             navLinks.classList.remove('active');
             navRight.classList.remove('active');
             hamburger.classList.remove('active');
+          }
+        } catch (error) {
+          console.error('Error in smooth scroll:', error);
         }
+      });
     });
-});
+  } catch (error) {
+    console.error('Error initializing smooth scroll:', error);
+  }
+}
 
-// Language Selector
-const languageLinks = document.querySelectorAll('.language-selector a');
+function initializeLanguageSelector() {
+  try {
+    const languageLinks = document.querySelectorAll('.language-selector a');
+    if (!languageLinks.length) return;
 
-languageLinks.forEach(link => {
-    link.addEventListener('click', (e) => {
-        e.preventDefault();
-        // Remove active class from all links
-        languageLinks.forEach(l => l.classList.remove('active'));
-        // Add active class to clicked link
-        link.classList.add('active');
+    languageLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        try {
+          e.preventDefault();
+          languageLinks.forEach(l => l.classList.remove('active'));
+          link.classList.add('active');
+        } catch (error) {
+          console.error('Error in language selector:', error);
+        }
+      });
     });
-});
+  } catch (error) {
+    console.error('Error initializing language selector:', error);
+  }
+}
 
-// Scroll Reveal Animation
-const observerOptions = {
-    threshold: 0.15,
-    rootMargin: '0px 0px -50px 0px'
-};
+function initializeScrollReveal() {
+  try {
+    const observerOptions = {
+      threshold: 0.15,
+      rootMargin: '0px 0px -50px 0px'
+    };
 
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
         if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            entry.target.style.transform = 'translateY(0)';
-            entry.target.style.opacity = '1';
+          entry.target.classList.add('visible');
+          entry.target.style.transform = 'translateY(0)';
+          entry.target.style.opacity = '1';
         }
-    });
-}, observerOptions);
+      });
+    }, observerOptions);
 
-// Observe all sections and features
-document.querySelectorAll('section, .feature, .room-card').forEach(element => {
-    element.style.opacity = '0';
-    element.style.transform = 'translateY(30px)';
-    element.style.transition = 'all 0.6s ease-out';
-    observer.observe(element);
-});
+    const elements = document.querySelectorAll('section, .feature, .room-card');
+    if (!elements.length) return;
+
+    elements.forEach(element => {
+      element.style.opacity = '0';
+      element.style.transform = 'translateY(30px)';
+      element.style.transition = 'all 0.6s ease-out';
+      observer.observe(element);
+    });
+  } catch (error) {
+    console.error('Error initializing scroll reveal:', error);
+  }
+}
