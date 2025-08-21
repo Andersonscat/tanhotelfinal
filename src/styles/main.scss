@@ -215,13 +215,14 @@ h1, h2, h3 {
     bottom: 64px;
     transform: translateX(-50%);
     display: grid;
-    grid-template-columns: 2fr 1.1fr 0.9fr auto;
+    grid-template-columns: 2fr 1.1fr 0.8fr auto;
     align-items: stretch;
     width: min(94vw, 1200px);
-    background: var(--white);
+    background: var(--light-beige);
+    border: 1px solid var(--secondary-beige);
     border-radius: 20px;
     padding: 8px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 10px 30px rgba(139, 115, 85, 0.15);
     z-index: 5;
     gap: 0;
 }
@@ -256,13 +257,13 @@ h1, h2, h3 {
 .icon {
     width: 20px;
     height: 20px;
-    fill: #6C2675;
+    fill: var(--brown);
     flex-shrink: 0;
 }
 
 .section-text {
     font-size: 14px;
-    color: #555;
+    color: var(--dark-brown);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -291,11 +292,11 @@ input[type="text"].section-text {
     background: transparent;
     padding: 0;
     width: 100%;
-    color: #555;
+    color: var(--dark-brown);
 }
 
 input[type="text"].section-text::placeholder {
-    color: #888;
+    color: var(--brown);
 }
 
 input[type="text"].section-text:focus {
@@ -310,17 +311,13 @@ input[type="text"].section-text:focus {
     padding: 0;
     border: none;
     border-radius: 50%;
-    background: #6C2675;
+    background: var(--brown);
     color: white;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     transition: all 0.3s ease;
-}
-
-.search-btn span {
-    display: none;
 }
 
 .search-btn .icon {
@@ -331,7 +328,7 @@ input[type="text"].section-text:focus {
 
 .search-btn:hover {
     transform: scale(1.05);
-    box-shadow: 0 4px 15px rgba(108, 38, 117, 0.3);
+    box-shadow: 0 4px 15px rgba(139, 115, 85, 0.3);
 }
 
 /* Popovers */
@@ -374,12 +371,12 @@ input[type="text"].section-text:focus {
 .stepper button {
     width: 28px;
     height: 28px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--secondary-beige);
     background: white;
     border-radius: 50%;
     cursor: pointer;
     font-size: 16px;
-    color: #6C2675;
+    color: var(--brown);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -387,8 +384,8 @@ input[type="text"].section-text:focus {
 }
 
 .stepper button:hover {
-    background: #6C2675;
-    border-color: #6C2675;
+    background: var(--brown);
+    border-color: var(--brown);
     color: white;
 }
 
@@ -398,7 +395,7 @@ input[type="text"].section-text:focus {
     font-size: 16px;
     border: none;
     background: transparent;
-    color: #555;
+    color: var(--dark-brown);
 }
 
 /* Mobile styles */
@@ -419,13 +416,6 @@ input[type="text"].section-text:focus {
         height: 48px;
         border-radius: 24px;
         margin: 8px 0 0;
-    }
-
-    .search-btn span {
-        display: inline;
-        margin-right: 8px;
-        font-weight: 500;
-        letter-spacing: 1px;
     }
 }
 

@@ -21,6 +21,7 @@ function initializeWebsite() {
   initializeSmoothScroll();
   initializeLanguageSelector();
   initializeScrollReveal();
+  initializeBookingForm();
 }
 
 function initializeNavbar() {
@@ -160,5 +161,133 @@ function initializeScrollReveal() {
     });
   } catch (error) {
     console.error('Error initializing scroll reveal:', error);
+  }
+}
+
+function initializeBookingForm() {
+  try {
+    const guestsSection = document.querySelector('.booking-section.guests');
+    const roomsSection = document.querySelector('.booking-section.rooms');
+    
+    if (guestsSection) {
+      initializePopover(guestsSection, 'guests');
+    }
+    
+    if (roomsSection) {
+      initializePopover(roomsSection, 'rooms');
+    }
+    
+    // Close popovers when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.booking-section') && !e.target.closest('.popover')) {
+        closeAllPopovers();
+      }
+    });
+    
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeAllPopovers();
+      }
+    });
+    
+  } catch (error) {
+    console.error('Error initializing booking form:', error);
+  }
+}
+
+function initializePopover(section, type) {
+  const popover = section.querySelector('.popover');
+  const textElement = section.querySelector('.section-text');
+  
+  if (!popover || !textElement) return;
+  
+  // Click handler
+  section.addEventListener('click', (e) => {
+    e.preventDefault();
+    togglePopover(section, popover);
+  });
+  
+  // Keyboard handlers
+  section.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      togglePopover(section, popover);
+    }
+  });
+  
+  // Stepper functionality
+  const steppers = popover.querySelectorAll('.stepper');
+  steppers.forEach(stepper => {
+    const minusBtn = stepper.querySelector('.minus');
+    const plusBtn = stepper.querySelector('.plus');
+    const input = stepper.querySelector('input');
+    
+    if (minusBtn && plusBtn && input) {
+      minusBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const currentValue = parseInt(input.value);
+        const min = parseInt(input.min);
+        if (currentValue > min) {
+          input.value = currentValue - 1;
+          updateDisplayText(type, textElement, input);
+        }
+      });
+      
+      plusBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const currentValue = parseInt(input.value);
+        const max = parseInt(input.max);
+        if (currentValue < max) {
+          input.value = currentValue + 1;
+          updateDisplayText(type, textElement, input);
+        }
+      });
+      
+      input.addEventListener('change', () => {
+        updateDisplayText(type, textElement, input);
+      });
+    }
+  });
+}
+
+function togglePopover(section, popover) {
+  const isActive = popover.classList.contains('active');
+  
+  // Close all other popovers first
+  closeAllPopovers();
+  
+  if (!isActive) {
+    popover.classList.add('active');
+    section.setAttribute('aria-expanded', 'true');
+  }
+}
+
+function closeAllPopovers() {
+  const activePopovers = document.querySelectorAll('.popover.active');
+  const activeSections = document.querySelectorAll('.booking-section[aria-expanded="true"]');
+  
+  activePopovers.forEach(popover => {
+    popover.classList.remove('active');
+  });
+  
+  activeSections.forEach(section => {
+    section.setAttribute('aria-expanded', 'false');
+  });
+}
+
+function updateDisplayText(type, textElement, input) {
+  if (type === 'guests') {
+    const adultsInput = input.name === 'adults' ? input : input.parentElement.parentElement.querySelector('input[name="adults"]');
+    const childrenInput = input.name === 'children' ? input : input.parentElement.parentElement.querySelector('input[name="children"]');
+    
+    if (adultsInput && childrenInput) {
+      const adults = parseInt(adultsInput.value);
+      const children = parseInt(childrenInput.value);
+      textElement.textContent = `${adults} Adult${adults !== 1 ? 's' : ''}, ${children} Child${children !== 1 ? 'ren' : ''}`;
+    }
+  } else if (type === 'rooms') {
+    const rooms = parseInt(input.value);
+    textElement.textContent = `${rooms} Room${rooms !== 1 ? 's' : ''}`;
   }
 }
