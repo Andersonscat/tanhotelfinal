@@ -1,3 +1,5 @@
+import '../styles/main.scss';
+
 // Navbar Scroll Effect
 const navbar = document.querySelector('.navbar');
 let lastScroll = 0;
