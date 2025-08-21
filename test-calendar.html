@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Calendar</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .test-button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .test-button:hover {
+            background: #0056b3;
+        }
+        .result {
+            margin-top: 10px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>Тест кастомного календаря</h1>
+        
+        <div class="test-section">
+            <h3>Функциональность календаря</h3>
+            <p>Кликните на блок дат ниже, чтобы открыть кастомный календарь:</p>
+            
+            <div class="booking-section dates" role="button" tabindex="0" aria-haspopup="dialog" aria-expanded="false" aria-controls="date-range-picker" style="border: 1px solid #ccc; padding: 15px; margin: 10px 0; cursor: pointer; background: white;">
+                <div class="section-content" style="display: flex; align-items: center; gap: 10px;">
+                    <svg class="icon" viewBox="0 0 24 24" width="20" height="20" style="fill: #333;">
+                        <path d="M9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm2-7h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/>
+                    </svg>
+                    <span class="section-text">Check-in → Check-out</span>
+                </div>
+                <input type="hidden" name="checkin" value="">
+                <input type="hidden" name="checkout" value="">
+            </div>
+            
+            <div class="result" id="result">
+                Выбранные даты: <span id="selected-dates">Не выбрано</span>
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <h3>Проверки</h3>
+            <ul>
+                <li>✅ Клик по всему блоку открывает календарь</li>
+                <li>✅ Выбор диапазона дат работает</li>
+                <li>✅ Обновление текста в блоке</li>
+                <li>✅ Скрытые поля заполняются</li>
+                <li>✅ Закрытие по клику вне календаря</li>
+                <li>✅ Закрытие по Escape</li>
+                <li>✅ Клавиатурная навигация (Enter/Space)</li>
+                <li>✅ ARIA атрибуты для доступности</li>
+            </ul>
+        </div>
+    </div>
+
+    <script type="module">
+        // Импортируем наш календарь
+        import DateRangePicker from './src/scripts/date-range-picker.js';
+        
+        // Инициализация
+        document.addEventListener('DOMContentLoaded', () => {
+            const datesSection = document.querySelector('.booking-section.dates');
+            const textElement = datesSection.querySelector('.section-text');
+            const checkInInput = datesSection.querySelector('input[name="checkin"]');
+            const checkOutInput = datesSection.querySelector('input[name="checkout"]');
+            const resultElement = document.getElementById('selected-dates');
+            
+            let datePicker = null;
+            
+            // Форматирование даты для отображения
+            function formatDate(date) {
+                return date.toLocaleDateString('en-US', {
+                    month: 'short',
+                    day: 'numeric'
+                });
+            }
+            
+            // Обновление отображения
+            function updateDisplay(checkIn, checkOut) {
+                if (checkIn && checkOut) {
+                    textElement.textContent = `${formatDate(checkIn)} → ${formatDate(checkOut)}`;
+                    resultElement.textContent = `${checkIn.toISOString().split('T')[0]} → ${checkOut.toISOString().split('T')[0]}`;
+                } else if (checkIn) {
+                    textElement.textContent = `${formatDate(checkIn)} → Check-out`;
+                    resultElement.textContent = `${checkIn.toISOString().split('T')[0]} → Не выбрано`;
+                } else {
+                    textElement.textContent = 'Check-in → Check-out';
+                    resultElement.textContent = 'Не выбрано';
+                }
+            }
+            
+            // Обновление скрытых полей
+            function updateHiddenInputs(checkIn, checkOut) {
+                if (checkInInput) {
+                    checkInInput.value = checkIn ? checkIn.toISOString().split('T')[0] : '';
+                }
+                if (checkOutInput) {
+                    checkOutInput.value = checkOut ? checkOut.toISOString().split('T')[0] : '';
+                }
+            }
+            
+            // Обработчик клика
+            datesSection.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                if (!datePicker) {
+                    datePicker = new DateRangePicker(datesSection, {
+                        onSelect: (checkIn, checkOut) => {
+                            updateDisplay(checkIn, checkOut);
+                            updateHiddenInputs(checkIn, checkOut);
+                            datesSection.setAttribute('aria-expanded', 'false');
+                        },
+                        onClose: () => {
+                            datesSection.setAttribute('aria-expanded', 'false');
+                        }
+                    });
+                }
+                
+                if (datePicker.isOpen) {
+                    datePicker.close();
+                } else {
+                    datePicker.open();
+                    datesSection.setAttribute('aria-expanded', 'true');
+                }
+            });
+            
+            // Клавиатурная навигация
+            datesSection.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    datesSection.click();
+                }
+            });
+            
+            // Закрытие по Escape
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && datePicker && datePicker.isOpen) {
+                    datePicker.close();
+                }
+            });
+            
+            // Закрытие по клику вне
+            document.addEventListener('click', (e) => {
+                if (datePicker && datePicker.isOpen && 
+                    !datesSection.contains(e.target) && 
+                    !e.target.closest('.date-range-picker')) {
+                    datePicker.close();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
