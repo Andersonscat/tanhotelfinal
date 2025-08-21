@@ -25,7 +25,7 @@
                     <span>|</span>
                     <a href="#">RU</a>
                     <span>|</span>
-                    <a href="#">KK</a>
+                    <a href="#">KZ</a>
                 </div>
                 <a href="#" class="reserve-button">Reserve Your Stay</a>
             </div>
@@ -103,6 +103,79 @@
 </form>
 
     </section>
+
+    <!-- Calendar Overlay -->
+    <div id="calendar-overlay" class="calendar-overlay">
+        <div class="calendar-container">
+            <div class="calendar-header">
+                <button class="nav-btn prev" aria-label="Previous month">
+                    <svg viewBox="0 0 24 24" width="16" height="16">
+                        <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+                    </svg>
+                </button>
+                <div class="month-display">
+                    <span class="current-month">AUGUST 2025</span>
+                    <span class="next-month">SEPTEMBER 2025</span>
+                </div>
+                <div class="header-right">
+                    <button class="close-btn" aria-label="Close calendar">
+                        <svg viewBox="0 0 24 24" width="16" height="16">
+                            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                        </svg>
+                    </button>
+                    <button class="nav-btn next" aria-label="Next month">
+                        <svg viewBox="0 0 24 24" width="16" height="16">
+                            <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="calendar-body">
+                <div class="calendar-grid">
+                    <div class="calendar-month">
+                        <div class="weekdays">
+                            <div>Mo</div>
+                            <div>Tu</div>
+                            <div>We</div>
+                            <div>Th</div>
+                            <div>Fr</div>
+                            <div>Sa</div>
+                            <div>Su</div>
+                        </div>
+                        <div class="days current-month-days"></div>
+                    </div>
+                    <div class="calendar-month">
+                        <div class="weekdays">
+                            <div>Mo</div>
+                            <div>Tu</div>
+                            <div>We</div>
+                            <div>Th</div>
+                            <div>Fr</div>
+                            <div>Sa</div>
+                            <div>Su</div>
+                        </div>
+                        <div class="days next-month-days"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="calendar-legend">
+                <div class="legend-item">
+                    <div class="legend-color available"></div>
+                    <span>Available</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color minimum-stay"></div>
+                    <span>Minimum stay</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color no-arrival"></div>
+                    <span>No arrival</span>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- About Section -->
     <section id="about" class="about">
